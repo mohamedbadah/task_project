@@ -15,7 +15,7 @@ class AddSubCategoriesIdToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->foreignId('sub_categories_id');
-            $table->foreign('sub_categories_id')->on('sub_categories')->references('id');
+            $table->foreign('sub_categories_id')->on('sub_categories')->references('id')->onDelete("cascade");
         });
     }
 

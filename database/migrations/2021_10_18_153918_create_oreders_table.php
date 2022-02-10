@@ -19,7 +19,7 @@ class CreateOredersTable extends Migration
             $table->enum('payment_txp', ['foo', 'bar']);
             $table->enum('status', ['active', 'disable'])->default('disable');
             $table->foreignId('users_id');
-            $table->foreign('users_id')->on('users')->references('id');
+            $table->foreign('users_id')->on('users')->references('id')->onDelete("cascade");
             $table->timestamps();
         });
     }

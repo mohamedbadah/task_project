@@ -16,9 +16,9 @@ class CreateOrederProductsTable extends Migration
         Schema::create('oreder_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('oreder_id');
-            $table->foreign('oreder_id')->on('oreders')->references('id');
+            $table->foreign('oreder_id')->on('oreders')->references('id')->onDelete("cascade");;
             $table->foreignId('product_id');
-            $table->foreign('product_id')->on('products')->references('id');
+            $table->foreign('product_id')->on('products')->references('id')->onDelete("cascade");;
             $table->integer('count');
             $table->double('item_price');
             $table->float('total');

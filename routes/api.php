@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ApiAuthController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Oreder;
@@ -96,7 +98,7 @@ Route::get('/foregin', function () {
     // $data = Oreder::findOrFail(17)->products;
     // $data = Product::findOrFail(7)->orders;
     // $data = Product::with('orders')->findOrFail(7);
-    // $data = Product::where('price', '=', 500)->exists();
+    $data = Product::where('price', '=', 509)->exists();
     // $data = Product::count();
     // $data = Product::where('price', '=', 509)->count() > 0;
     // $data = Product::where('price', '=', 509)->doesntExist();
@@ -108,9 +110,23 @@ Route::get('/foregin', function () {
     // $data = Category::findOrFail(1)->products;
     //اثبات
     // $data = sub_categories::findOrFail(3)->products;
-    $data = User::with('images')->findOrFail(1);
-    // $data = Image::findOrFail(1);
+    // $data = User::with('images')->findOrFail(1);
+    // $product = Product::all();
+    // // $data = Image::findOrFail(1);
+    // $datas = Category::findOrFail(1);
+    // $data = $datas->products;
     return response()->json([
         'data' => $data
     ]);
+});
+Route::prefix('auth')->group(function () {
+    Route::post('login', [ApiAuthController::class, 'login']);
+    Route::post('forget_password', [ApiAuthController::class, 'forgetPasword']);
+    Route::post('reset_password', [ApiAuthController::class, 'reset_password']);
+});
+Route::prefix('auth')->middleware('auth:api')->group(function () {
+    Route::get('logout', [ApiAuthController::class, 'logout']);
+});
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('category', CategoryController::class);
 });

@@ -17,7 +17,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST" action="{{route('cities.store')}}">
+              <form method="POST" action="{{route('admin.cities.store')}}">
                 @csrf
                 <div class="card-body">
                     @if ($errors->any())

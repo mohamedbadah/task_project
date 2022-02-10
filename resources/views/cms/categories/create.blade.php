@@ -38,8 +38,15 @@
                 </div>
               @endif --}}
                   <div class="form-group">
-                    <label for="name">city name</label>
+                    <label for="name">category name</label>
                     <input type="text" class="form-control" id="name" placeholder="enter city name">
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile">
+                      {{-- <input type="file" placeholder="image" name="image" class=" form-control mb-3"> --}}
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
                   </div>
                    <div class="form-group">
                     <div class="custom-control custom-switch">
@@ -48,7 +55,7 @@
                     </div>
                   </div>
                    <div class="form-group">
-                  <button class="btn btn-primary" class="form-control" onclick="store()">Store</button>
+                  <button class="btn btn-success" class="form-control" onclick="store()">Store</button>
                 </div>
                 </div>
               </form>
@@ -61,14 +68,18 @@
 @section('scripts')
 <script>
             function store(){
-                axios.post('/cms/admin/categories',{
-                    name:document.getElementById('name').value,
-                    active:document.getElementById('active').checked
-
-                })
-        .then(function (response) {
+                let formData=new FormData();
+                formData.append('name',document.getElementById('name').value);
+                formData.append('active',document.getElementById('active').checked ? 1:0);
+                formData.append('image',document.getElementById('customFile').files[0]);
+                axios.post('/cms/categories/',formData,{
+           headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+       }
+     ).then(function (response) {
             toastr.success(response.data.message)
-             window.location.href="/cms/admin/categories"
+             window.location.href="/cms/categories/"
             console.log(response);
         })
         .catch(function (error) {
@@ -78,6 +89,9 @@
         .then(function () {
             // always executed
         });
+            }
+            function hello(){
+                alert('Hello');
             }
 </script>
 @endsection

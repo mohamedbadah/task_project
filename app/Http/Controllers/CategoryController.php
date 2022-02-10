@@ -39,12 +39,22 @@ class CategoryController extends Controller
     {
         $validator = Validator($request->all(), [
             'name' => 'required|string|min:3|max:30',
-            'active' => 'required|boolean'
+            'active' => 'required|boolean',
+            'image' => 'required|image|max:2048|mimes:png,jpg'
         ]);
         if (!$validator->fails()) {
             $category = new Category();
             $category->name = $request->name;
             $category->active = $request->active;
+            // $image = $request->file('image');
+            // $imageName = rand(1000, 1000000000) . '_category' . '.' . $image->getClientOriginalExtension();
+            // $image->move(public_path('images'), $imageName);
+            // // $image->storeAs('image', $imageName, ['disk' => 'public']);
+            // $category->image = $imageName;
+            $ex = $request->file('image')->getClientOriginalExtension();
+            $new_name = 'category_' . time() . '_' . $ex;
+            $request->file('image')->move(public_path('upload'), $new_name);
+            $category->image = $new_name;
             $isSaved = $category->save();
             return response()->json([
                 'message' => $isSaved ? "saved success" : "Faild"
@@ -89,11 +99,17 @@ class CategoryController extends Controller
     {
         $validator = Validator($request->all(), [
             'name' => 'required|string|min:3|max:30',
+            'image' => 'required|image|max:2048|mimes:png,jpg',
             'active' => 'required|boolean'
         ]);
         if (!$validator->fails()) {
             $category->name = $request->name;
             $category->active = $request->active;
+            $image = $request->file('image');
+            $imageName = rand(1000, 1000000000) . '_category' . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            // $image->storeAs('image', $imageName, ['disk' => 'public']);
+            $category->image = $imageName;
             $isUpdate = $category->save();
             return response()->json([
                 'message' => $isUpdate ? "update is succfully" : "faild is update"
@@ -113,6 +129,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // $category = new Category();
         $isDeleted = $category->delete();
         if ($isDeleted) {
             return response()->json([
@@ -123,5 +140,8 @@ class CategoryController extends Controller
                 'icon' => 'error', 'title' => 'faild', 'text' => 'faild deleted'
             ], Response::HTTP_BAD_REQUEST);
         }
+        // $category = Category::findOrFail($id);
+        // $isDeleted = $category->delete();
+        // echo $isDeleted ? "success" : "fail";
     }
 }

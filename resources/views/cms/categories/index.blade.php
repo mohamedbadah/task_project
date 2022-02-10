@@ -34,6 +34,7 @@
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
+                      <th>Image</th>
                       <th>active</th>
                       <th>Created_at</th>
                       <th>Update_at</th>
@@ -45,16 +46,17 @@
                     <tr>
                       <td>{{$category->id}}</td>
                       <td>{{$category->name}}</td>
+                      <td><img class="img-circle img-bordered-sm" width="100" height="100" src="{{asset('images/'.$category->image)}}" alt="User Image"></td>
                       <td><span class=" px-2 badge @if($category->active) bg-success @else bg-danger @endif">{{$category->status}}</span></td>
                       <td>{{$category->created_at}}</td>
                       <td>{{$category->updated_at}}</td>
-                      <td><a href="{{route('categories.edit',$category->id)}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                        {{-- <form class="d-inline" method="post" action="{{route('cities.destroy',$city->id)}}">
-                            @csrf
-                            @method('delete')
-                            <button class="btn btn-danger" class="form-control"><i class="fas fa-trash-alt"></i></button>
-                        </form> --}}
-                        <button class="btn btn-danger" onclick="confirmDestroy({{$category->id}},this)"><i class="fas fa-trash-alt"></i></button>
+                      <td><a href="{{route('admin.categories.edit',$category->id)}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                        {{-- <form class="d-inline" method="post" action="{{route('admin.categories.destroy',$category->id)}}"> --}}
+                            {{-- @csrf
+                            @method('delete') --}}
+                            <button onclick="confirmDestroy({{$category->id}},this)" class="btn btn-danger" class="form-control"><i class="fas fa-trash-alt"></i></button>
+                        {{-- </form> --}}
+                        {{-- <button class="btn btn-danger" onclick="confirmDestroy({{$category->id}},this)"><i class="fas fa-trash-alt"></i></button> --}}
                     </td>
                     </tr>
                       @endforeach
@@ -88,7 +90,7 @@
 })
     }
     function destroy(id,ref){
-       axios.delete('/cms/admin/categories/'+id)
+       axios.delete('/cms/categories/'+id)
         .then(function (response) {
             // handle success
            showMessage(response.data);

@@ -29,6 +29,13 @@
                       <label class="custom-control-label" for="active">active</label>
                     </div>
                   </div>
+                  <div class="form-group">
+                       <div class="custom-file">
+                      <input type="file" class="custom-file-input" value="{{$category->image}}" id="customFiles">
+                      {{-- <input type="file" placeholder="image" name="image" class=" form-control mb-3"> --}}
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                  </div>
                   <button class="btn btn-primary" class="form-control" onclick="update({{$category->id}})">update</button>
                 </div>
               </form>
@@ -41,14 +48,24 @@
 @section('scripts')
 <script>
 function update(id){
-                axios.put('/cms/admin/categories/'+id,{
-                    name:document.getElementById('name').value,
-                    active:document.getElementById('active').checked
-
-                })
+             let formData=new FormData();
+                formData.append('name',document.getElementById('name').value);
+                formData.append('active',document.getElementById('active').checked ? 1:0);
+                formData.append('image',document.getElementById('customFiles').files[0]);
+                axios.put('/cms/categories/'+id,formData,{
+           headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+       }
+                // {
+                //     name:document.getElementById('name').value,
+                //     active:document.getElementById('active').checked,
+                //     image:document.getElementById('customFiles').files[0]
+                // }
+                )
         .then(function (response) {
             toastr.success(response.data.message)
-             window.location.href="/cms/admin/categories"
+             window.location.href="/admin/categories"
             console.log(response);
         })
         .catch(function (error) {

@@ -175,7 +175,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{asset('cms/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+            @if (auth('user')->check())
+               <a href="#" class="d-block">
+               {{auth('user')->user()->name}}</a>
+               @else
+                  <a href="#" class="d-block">
+               {{auth('admin')->user()->name}}</a>
+               @endif
         </div>
       </div>
 
@@ -220,7 +226,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-header">EXAMPLES</li>
-          <li class="nav-item">
+          @if (auth('admin')->check())
+             <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-location-arrow"></i>
               <p>
@@ -243,6 +250,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          @endif
            <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-location-arrow"></i>
@@ -253,19 +261,135 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview" style="display: none;">
               <li class="nav-item">
-                <a href="{{route('categories.index')}}" class="nav-link">
+                <a href="{{route('admin.categories.index')}}" class="nav-link">
                   <i class="fas fa-list-ul"></i>
                   <p class="ml-2">index</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('categories.create')}}" class="nav-link">
+                <a href="{{route('admin.categories.create')}}" class="nav-link">
                   <i class="fas fa-plus-circle"></i>
                   <p class="ml-2">create</p>
                 </a>
               </li>
             </ul>
           </li>
+          @if (auth('admin')->check())
+             <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-location-arrow"></i>
+              <p>
+                admin
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+                <a href="{{route('admin')}}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p class="ml-2">index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle"></i>
+                  <p class="ml-2">create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          @endif
+         @if (auth('admin')->check())
+             <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-location-arrow"></i>
+              <p>
+               user
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+                <a href="{{route('user')}}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p class="ml-2">index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('createUser')}}" class="nav-link">
+                  <i class="fas fa-plus-circle"></i>
+                  <p class="ml-2">create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+         @endif
+           <li class="nav-header">Roles & Permissions</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-location-arrow"></i>
+              <p>
+               permission
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+                <a href="{{route('permission.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p class="ml-2">index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('permission.create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle"></i>
+                  <p class="ml-2">create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+           <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-location-arrow"></i>
+              <p>
+               Roles
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+                <a href="{{route('role.index')}}" class="nav-link">
+                  <i class="fas fa-list-ul"></i>
+                  <p class="ml-2">index</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('role.create')}}" class="nav-link">
+                  <i class="fas fa-plus-circle"></i>
+                  <p class="ml-2">create</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+           <li class="nav-item">
+                <a href="{{route('admin.changePass')}}" class="nav-link">
+                  <i class="fas fa-key"></i>
+                  <p class="ml-2">change-password</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.edit-profile')}}" class="nav-link">
+                  <i class="fas fa-edit"></i>
+                  <p class="ml-2">edit profile</p>
+                </a>
+              </li>
+           <li class="nav-item">
+                <a href="{{route('admin.logout')}}" class="nav-link">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <p class="ml-2">logout</p>
+                </a>
+              </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

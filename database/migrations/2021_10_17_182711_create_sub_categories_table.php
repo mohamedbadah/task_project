@@ -18,8 +18,6 @@ class CreateSubCategoriesTable extends Migration
             $table->string('title', 45);
             $table->string('description', 100);
             $table->enum('status', ['visible', 'invisible'])->default('visible');
-            $table->foreignId('categories_id');
-            $table->foreign('categories_id')->on('categories')->references('id');
             $table->timestamps();
         });
     }
