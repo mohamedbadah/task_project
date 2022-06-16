@@ -11,6 +11,7 @@ use App\Http\Controllers\RolePermission;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\displayController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PermissionUserController;
 use App\Http\Controllers\RolePermissionController;
@@ -123,3 +124,5 @@ Route::get('hello', function () {
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('index', [displayController::class, 'index']);
+Route::get('display', [displayController::class, 'display']);

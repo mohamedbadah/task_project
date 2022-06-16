@@ -46,15 +46,15 @@ class CategoryController extends Controller
             $category = new Category();
             $category->name = $request->name;
             $category->active = $request->active;
-            // $image = $request->file('image');
-            // $imageName = rand(1000, 1000000000) . '_category' . '.' . $image->getClientOriginalExtension();
-            // $image->move(public_path('images'), $imageName);
-            // // $image->storeAs('image', $imageName, ['disk' => 'public']);
-            // $category->image = $imageName;
-            $ex = $request->file('image')->getClientOriginalExtension();
-            $new_name = 'category_' . time() . '_' . $ex;
-            $request->file('image')->move(public_path('upload'), $new_name);
-            $category->image = $new_name;
+            $image = $request->file('image');
+            $imageName = rand(1000, 1000000000) . '_category' . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            // $image->storeAs('image', $imageName, ['disk' => 'public']);
+            $category->image = $imageName;
+            // $ex = $request->file('image')->getClientOriginalExtension();
+            // $new_name = 'category_' . time() . '_' . $ex;
+            // $request->file('image')->move(public_path('upload'), $new_name);
+            // $category->image = $new_name;
             $isSaved = $category->save();
             return response()->json([
                 'message' => $isSaved ? "saved success" : "Faild"

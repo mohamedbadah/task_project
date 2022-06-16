@@ -87,7 +87,7 @@ class RolePermission extends Controller
             } else {
                 $role->givePermissionTo($permission);
             }
-            return response()->json(['message' => 'permission update successfuly'], Response::HTTP_OK);
+            return response()->json(['message' => 'permission updates successfuly'], Response::HTTP_OK);
         } else {
             return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
         }

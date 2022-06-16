@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::withCount('permissions')->get();
+        $user = Admin::withCount('permissions')->get();
         return view('cms.user.index', ['users' => $user]);
     }
     public function create()

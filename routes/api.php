@@ -25,7 +25,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/welcome', function () {
+// Route::get('/welcome', function () {
+//     return response()->json([
+//         'message' => 'hello mohamed'
+//     ]);
+Route::get('/hello', function () {
     return response()->json([
         'message' => 'hello mohamed'
     ]);
@@ -98,7 +102,7 @@ Route::get('/foregin', function () {
     // $data = Oreder::findOrFail(17)->products;
     // $data = Product::findOrFail(7)->orders;
     // $data = Product::with('orders')->findOrFail(7);
-    $data = Product::where('price', '=', 509)->exists();
+    // $data = Product::where('price', '=', 509)->exists();
     // $data = Product::count();
     // $data = Product::where('price', '=', 509)->count() > 0;
     // $data = Product::where('price', '=', 509)->doesntExist();
@@ -115,6 +119,8 @@ Route::get('/foregin', function () {
     // // $data = Image::findOrFail(1);
     // $datas = Category::findOrFail(1);
     // $data = $datas->products;
+    $data = User::with('orders')->findOrFail(3);
+    $data = User::all();
     return response()->json([
         'data' => $data
     ]);
